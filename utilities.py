@@ -4,12 +4,6 @@
 # Midterm Student Utilities File
 # --------------------------
 
-# -----------------------------------------------
-# Remember to change the name of the file to:
-#               utilities.py
-# Delete this box after changing the file name
-# ----------------------------------------------
-
 # ----------------------------------------------
 # You can not add any library other than these:
 import math
@@ -107,7 +101,7 @@ def debug_substitution(ciphertext, baseString):
         print('\n')
 
         print('ciphertext:')
-        print(ciphertext[201:500])  # <---- you can edit this if you need to show more text
+        print(ciphertext[:2300])  # <---- you can edit this if you need to show more text
         for i in range(len(plaintext)):
             if ciphertext[i].lower() == subChar:
                 if subChar == '#' or subChar == '\n':
@@ -115,7 +109,7 @@ def debug_substitution(ciphertext, baseString):
                 else:
                     plaintext[i] = baseChar
         print('plaintext :')
-        print("".join(plaintext[201:500]))  # <---- you can edit this if you need to show more text
+        print("".join(plaintext[:2300]))  # <---- you can edit this if you need to show more text
         print('\n_______________________________________\n')
         command = input('Enter Command: ')
         description = input('Description: ')
@@ -124,6 +118,19 @@ def debug_substitution(ciphertext, baseString):
 
 
 # you can add any utility functions as you like
+
+# -----------------------------------------------------------
+# Parameters:   text (string)
+#               filename (string)
+# Return:       none
+# Description:  Utility function to write any given text to a file
+#               If file already exist, previous content will be over-written
+# -----------------------------------------------------------
+def text_to_file(text, filename):
+    outFile = open(filename, 'w')
+    outFile.write(text)
+    outFile.close()
+    return
 
 
 # -----------------------------------------------------------------------------
@@ -536,6 +543,11 @@ def insert_nonalpha(text, nonAlpha):
     return modifiedText
 
 
+# -----------------------------------
+# Parameters:   None
+# Return:       shiftList (list)
+# Description:  construct all the 8 possible kinds of shiftString for xshift
+# -----------------------------------
 def get_shiftStringList():
     atbash_lower = ''
     regular_lower = get_lower()
@@ -558,27 +570,3 @@ def get_shiftStringList():
     return shiftList
 
 
-c = file_to_text('ciphertext_Jiayao_Pang_q3.txt')
-
-'''
-charCount = get_charCount(remove_nonalpha(c))
-print(charCount)
-length = len(remove_nonalpha(c))
-
-counter = 0
-for char in charCount:
-    charCount[counter] = round(float(char / length), 4)
-    counter += 1
-
-print(charCount)
-print(get_freqTable())
-
-wordList = text_to_words(c.replace('!', ' '))
-single = list()
-
-for word in wordList:
-    if len(word) == 1 and word not in single:
-        single.append(word)
-print(single)
-'''
-debug_substitution(c, get_baseString())

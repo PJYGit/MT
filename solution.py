@@ -1,5 +1,5 @@
 # --------------------------
-# Name: Jiayao Pang ID: 19417430
+# Name: Jiayao Pang ID: 194174300
 # CP460 (Fall 2019)
 # Midterm Student Solution File
 # --------------------------
@@ -188,6 +188,7 @@ def cryptanalysis_vigenere(ciphertext):
                     counter += 1
                     key += v_square[0][kIndex]
 
+                utilities.text_to_file(plaintext, 'plaintext_Jiayao_Pang_q4.txt')
                 return key, plaintext
 
     key = 0
@@ -243,7 +244,7 @@ def e_substitution(plaintext, key):
             cipherChar = cipherChar.upper() if upperFlag else cipherChar
 
         else:
-            cipherChar = plainChar
+            cipherChar = plainChar.upper() if upperFlag else plainChar
 
         ciphertext += cipherChar
 
@@ -275,7 +276,7 @@ def d_substitution(ciphertext, key):
             plainChar = plainChar.upper() if upperFlag else plainChar
 
         else:
-            plainChar = cipherChar
+            plainChar = cipherChar.upper() if upperFlag else cipherChar
 
         plaintext += plainChar
 
@@ -285,16 +286,18 @@ def d_substitution(ciphertext, key):
 
 
 def cryptanalysis_substitution(ciphertext):
-    key = '''yhribekafszmpxwojductnvlgq!-#;". '?,:'''  # <--- change this line with your key
+    key = '''smzokelxrcitbudnhwfpyaqvjg':"!-; ,#?.'''  # <--- change this line with your key
     key = utilities.adjust_key(key)  # <--- keep this line
     # add lines to decrypt the ciphertext
+    plaintext = d_substitution(ciphertext, key)
     # remember to write your plaintext to file
+    utilities.text_to_file(plaintext, 'plaintext_Jiayao_Pang_q3.txt')
     return key, plaintext
 
 
 def comments_q2():
     print('Comments:')
-    print('See Qutaiba_Albluwi_sub_log.txt file')  # <----- edit this
+    print('See Jiayao_Pang_sub_log.txt file')  # <----- edit this
     return
 
 
@@ -374,6 +377,7 @@ def cryptanalysis_xshift(ciphertext):
             plaintext = d_xshift(ciphertext, (shiftString, dis))
 
             if utilities.is_plaintext(plaintext, 'engmix.txt', 0.90):
+                utilities.text_to_file(plaintext, 'plaintext_Jiayao_Pang_q2.txt')
                 return (shiftString, dis), plaintext
 
     key = ('', 0)
@@ -459,6 +463,7 @@ def cryptanalysis_xcrypt(ciphertext):
 
         plaintext = d_xcrypt(ciphertext, possibleKey)
         if utilities.is_plaintext(plaintext, 'engmix.txt', 0.90):
+            utilities.text_to_file(plaintext, 'plaintext_Jiayao_Pang_q1.txt')
             return int(possibleKey), plaintext
 
     found = False
@@ -470,7 +475,7 @@ def cryptanalysis_xcrypt(ciphertext):
 
     if found is False:
         return 0, ''
-
+    utilities.text_to_file(plaintext, 'plaintext_Jiayao_Pang_q1.txt')
     return i, plaintext
 
 
@@ -486,31 +491,7 @@ def comments_q4():
           'First of all, I find out the distance between the last 2 letters q.\n'
           'And then I guess: \n'
           '    possibleKey = len(ciphertext) / distance.\n'
-          'Next, I use the possibleKey to d_xcrypt() and use is_plaintext() to see if it is successful'
+          'Next, I use the possibleKey to d_xcrypt() and use is_plaintext() to see if it is successful\n'
           'If successful, return. Else, try real brute-force.')
     return
 
-
-'''
-p = utilities.file_to_text('ciphertext_Jiayao_Pang_q1.txt')
-c = d_xcrypt(p, 147)
-print(c)
-f = open('plaintext_Jiayao_Pang_q1.txt', 'w')
-f.write(c)
-f.close()
-
-print(cryptanalysis_xshift(p))
-
-print(utilities.getKeyL_friedman(p))
-print(utilities.getKeyL_shift(p))
-
-
-
-# p = 'THISTERMISEASY'
-# c = e_xcrypt(p, 82)
-# print(e_xcrypt(p, 82))
-# c = e_vigenere(p, 'disposition')
-# print(d_vigenere(c, 'disposition'))
-
-print(cryptanalysis_xcrypt(p))
-'''
